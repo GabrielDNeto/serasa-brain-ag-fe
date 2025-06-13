@@ -3,8 +3,13 @@ import Dashboard from "../../pages/dashboard";
 import PagesTemplate from "../../components/templates/PagesTemplate";
 import { APP_ROUTES } from "./constants";
 import Producers from "@/pages/producers";
+import Signin from "@/pages/signin";
 
 export const ROUTER = createBrowserRouter([
+  {
+    path: APP_ROUTES.public.signin,
+    Component: Signin,
+  },
   {
     Component: PagesTemplate,
     children: [

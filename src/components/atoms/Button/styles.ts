@@ -3,18 +3,20 @@ import type { IButton } from ".";
 
 export const StyledButton = styled.button<IButton>`
   padding: 0.5rem 1rem;
+  font-size: 1rem;
+  line-height: 1.5rem;
   border-radius: 8px;
   border: none;
   font-weight: 600;
   cursor: pointer;
   transition: 0.2s;
 
-  background-color: ${({ variant }) => {
+  background-color: ${({ theme, variant }) => {
     switch (variant) {
       case "secondary":
         return "#ccc";
       default:
-        return "#3498db";
+        return theme.colors.zinc[800];
     }
   }};
 
