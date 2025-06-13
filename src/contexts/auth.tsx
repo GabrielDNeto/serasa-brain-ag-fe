@@ -1,8 +1,9 @@
 import { AuthStatusEnum } from "@/@types/auth";
-import React, { createContext, useState } from "react";
+import React, { createContext, useEffect, useState } from "react";
 
 interface IAuthContext {
   authStatus: AuthStatusEnum;
+  handleAuthenticate: (token: string) => void;
 }
 
 interface IAuthProvider {
@@ -16,8 +17,23 @@ export function AuthProvider({ children }: IAuthProvider) {
     AuthStatusEnum.PENDING,
   );
 
+  const handleAuthenticate = (token: string) => {
+    localStorage.setItem("@session:token", token);
+    setAuthStatus(AuthStatusEnum.AUTHORIZED);
+  };
+
+  useEffect(() => {
+    const token = localStorage.getItem("@session:token");
+
+    if (!token) {
+      setAuthStatus(AuthStatusEnum.UNNAUTHORIZED);
+    } else {
+      handleAuthenticate(token);
+    }
+  }, []);
+
   return (
-    <AuthContext.Provider value={{ authStatus }}>
+    <AuthContext.Provider value={{ authStatus, handleAuthenticate }}>
       {children}
     </AuthContext.Provider>
   );

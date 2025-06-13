@@ -6,6 +6,11 @@ import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import InputMessage from "@/components/atoms/Forms/InputMessage";
 import Button from "@/components/atoms/Button";
+import { useMutation } from "@tanstack/react-query";
+import { signIn } from "@/services/auth";
+import { useAuth } from "@/hooks/useAuth";
+import { useNavigate } from "react-router";
+import { APP_ROUTES } from "@/config/routes/constants";
 
 const signinSchema = z.object({
   username: z.string().min(1, "Campo obrigatório"),
@@ -15,6 +20,8 @@ const signinSchema = z.object({
 type SigninSchemaType = z.infer<typeof signinSchema>;
 
 export default function Signin() {
+  const { handleAuthenticate } = useAuth();
+
   const {
     register,
     formState: { errors },
@@ -27,8 +34,18 @@ export default function Signin() {
     },
   });
 
+  const navigate = useNavigate();
+
+  const signinMutation = useMutation({
+    mutationFn: signIn,
+    onSuccess: (response) => {
+      handleAuthenticate(response.data.access_token);
+      navigate(APP_ROUTES.private.dashboard);
+    },
+  });
+
   const submit = (data: SigninSchemaType) => {
-    console.log("data", data);
+    signinMutation.mutate(data);
   };
 
   return (
