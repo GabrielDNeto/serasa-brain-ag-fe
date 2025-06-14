@@ -2,9 +2,11 @@ import { APP_ROUTES } from "@/config/routes/constants";
 import { useAuth } from "@/hooks/useAuth";
 import { signIn } from "@/services/auth";
 import { useMutation } from "@tanstack/react-query";
-import { Button, Form, Input } from "antd";
-import { useNavigate } from "react-router";
+import { Button, Form, Input, message } from "antd";
+import { useNavigate, type ErrorResponse } from "react-router";
 import { StyledSection } from "./styles";
+import type { AxiosError } from "axios";
+import { getErrorMessage } from "@/utils/get-error-message";
 
 type SigninSchemaType = {
   username: string;
@@ -14,6 +16,8 @@ type SigninSchemaType = {
 export default function Signin() {
   const { handleAuthenticate } = useAuth();
 
+  const [messageApi, contextHolder] = message.useMessage();
+
   const navigate = useNavigate();
 
   const signinMutation = useMutation({
@@ -21,6 +25,12 @@ export default function Signin() {
     onSuccess: (response) => {
       handleAuthenticate(response.data.access_token);
       navigate(APP_ROUTES.private.dashboard);
+    },
+    onError: (error) => {
+      messageApi.open({
+        type: "error",
+        content: getErrorMessage(error),
+      });
     },
   });
 
@@ -30,6 +40,8 @@ export default function Signin() {
 
   return (
     <StyledSection>
+      {contextHolder}
+
       <div>
         <h1>Acessar Plataforma</h1>
 
