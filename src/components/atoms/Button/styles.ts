@@ -2,7 +2,7 @@ import styled from "styled-components";
 import type { IButton } from ".";
 
 export const StyledButton = styled.button<IButton>`
-  padding: ${({ size }) => (size === "lg" ? "0.5rem 1rem" : "0.25rem 0.5rem")};
+  padding: ${({ size }) => (size === "lg" ? "0.5rem" : "0.25rem")};
   font-size: 0.875rem;
   line-height: 1.25rem;
   border-radius: 0.5rem;
@@ -20,6 +20,8 @@ export const StyledButton = styled.button<IButton>`
       case "secondary":
         return "#ccc";
       case "outline":
+        return "transparent";
+      case "ghost":
         return "transparent";
       case "destructive":
         return theme.colors.destructive;
@@ -41,8 +43,11 @@ export const StyledButton = styled.button<IButton>`
 
   &:hover {
     opacity: ${({ variant }) => (variant === "outline" ? 1 : 0.8)};
-    background-color: ${({ theme, variant }) =>
-      variant === "outline" && theme.colors.zinc[200]};
+    background-color: ${({ theme, variant }) => {
+      if (variant === "ghost" || variant === "outline") {
+        return theme.colors.zinc[300];
+      }
+    }};
   }
 
   &:disabled {

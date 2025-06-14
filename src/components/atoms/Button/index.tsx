@@ -1,7 +1,7 @@
 import { StyledButton } from "./styles";
 
 export interface IButton extends React.ButtonHTMLAttributes<HTMLButtonElement> {
-  variant?: "primary" | "secondary" | "outline" | "destructive";
+  variant?: "primary" | "secondary" | "outline" | "destructive" | "ghost";
   size?: "lg" | "sm";
 }
 
