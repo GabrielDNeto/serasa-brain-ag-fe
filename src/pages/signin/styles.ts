@@ -12,7 +12,7 @@ export const StyledSection = styled.section`
     padding: 3rem 1.5rem;
     border-radius: 1rem;
     width: 100%;
-    max-width: 30rem;
+    max-width: 25rem;
 
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
 
@@ -22,10 +22,13 @@ export const StyledSection = styled.section`
 
     form {
       margin-top: 2rem;
+      width: 100%;
+      max-width: 18rem;
 
-      display: flex;
-      flex-direction: column;
-      gap: 1.5rem;
+      button {
+        width: 100%;
+        margin-top: 1.5rem;
+      }
     }
   }
 `;

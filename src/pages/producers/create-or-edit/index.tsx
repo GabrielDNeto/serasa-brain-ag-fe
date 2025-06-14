@@ -1,5 +1,4 @@
 import Button from "@/components/atoms/Button";
-import Input from "@/components/atoms/Forms/Input";
 import FormLabel from "@/components/atoms/Forms/Label";
 import Container from "@/components/organisms/Container";
 import { Flex } from "@/styles/global";
@@ -7,6 +6,7 @@ import { ArrowLeft } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { useParams } from "react-router";
 import { ContentWrapper, FormContent, StyledSection, Wrapper } from "./styles";
+import { Input } from "antd";
 
 export default function CreateOrEditProducer() {
   const { id } = useParams();

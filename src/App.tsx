@@ -5,20 +5,24 @@ import { ThemeProvider } from "styled-components";
 import { theme } from "./styles/theme";
 import { AuthProvider } from "./contexts/auth";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { ConfigProvider } from "antd";
+import { themeConfig } from "./styles/antd.config";
 
 function App() {
   const queryClient = new QueryClient();
 
   return (
     <>
-      <ThemeProvider theme={theme}>
-        <GlobalStyle />
-        <AuthProvider>
-          <QueryClientProvider client={queryClient}>
-            <RouterProvider router={ROUTER} />
-          </QueryClientProvider>
-        </AuthProvider>
-      </ThemeProvider>
+      <ConfigProvider theme={themeConfig}>
+        <ThemeProvider theme={theme}>
+          <GlobalStyle />
+          <AuthProvider>
+            <QueryClientProvider client={queryClient}>
+              <RouterProvider router={ROUTER} />
+            </QueryClientProvider>
+          </AuthProvider>
+        </ThemeProvider>
+      </ConfigProvider>
     </>
   );
 }

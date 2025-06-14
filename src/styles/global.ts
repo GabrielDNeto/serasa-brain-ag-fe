@@ -21,6 +21,14 @@ export const GlobalStyle = createGlobalStyle`
   ul, li {
     list-style: none;
   }
+
+  input {
+    &:focus, &:hover {
+      border-color: ${({ theme }) => theme.colors.zinc[800]} !important;
+      box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.1) !important;
+    }
+  }
+
 `;
 
 export const FlexBetween = styled.div`

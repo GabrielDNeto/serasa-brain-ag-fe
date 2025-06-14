@@ -1,38 +1,18 @@
-import Input from "@/components/atoms/Forms/Input";
-import { StyledSection } from "./styles";
-import FormLabel from "@/components/atoms/Forms/Label";
-import { useForm } from "react-hook-form";
-import { z } from "zod";
-import { zodResolver } from "@hookform/resolvers/zod";
-import InputMessage from "@/components/atoms/Forms/InputMessage";
-import Button from "@/components/atoms/Button";
-import { useMutation } from "@tanstack/react-query";
-import { signIn } from "@/services/auth";
-import { useAuth } from "@/hooks/useAuth";
-import { useNavigate } from "react-router";
 import { APP_ROUTES } from "@/config/routes/constants";
+import { useAuth } from "@/hooks/useAuth";
+import { signIn } from "@/services/auth";
+import { useMutation } from "@tanstack/react-query";
+import { Button, Form, Input } from "antd";
+import { useNavigate } from "react-router";
+import { StyledSection } from "./styles";
 
-const signinSchema = z.object({
-  username: z.string().min(1, "Campo obrigatório"),
-  password: z.string().min(1, "Campo obrigatório"),
-});
-
-type SigninSchemaType = z.infer<typeof signinSchema>;
+type SigninSchemaType = {
+  username: string;
+  password: string;
+};
 
 export default function Signin() {
   const { handleAuthenticate } = useAuth();
-
-  const {
-    register,
-    formState: { errors },
-    handleSubmit,
-  } = useForm<SigninSchemaType>({
-    resolver: zodResolver(signinSchema),
-    defaultValues: {
-      username: "",
-      password: "",
-    },
-  });
 
   const navigate = useNavigate();
 
@@ -44,7 +24,7 @@ export default function Signin() {
     },
   });
 
-  const submit = (data: SigninSchemaType) => {
+  const onSubmit = (data: SigninSchemaType) => {
     signinMutation.mutate(data);
   };
 
@@ -53,35 +33,33 @@ export default function Signin() {
       <div>
         <h1>Acessar Plataforma</h1>
 
-        <form onSubmit={handleSubmit(submit)}>
-          <div>
-            <FormLabel htmlFor="username">Usuário</FormLabel>
-            <Input
-              id="username"
-              placeholder="jhondoe"
-              hasError={!!errors.username}
-              {...register("username", { required: true })}
-            />
-            {errors.username && (
-              <InputMessage>{errors.username.message}</InputMessage>
-            )}
-          </div>
+        <Form
+          name="basic"
+          labelCol={{ span: 24 }}
+          wrapperCol={{ span: 24 }}
+          style={{ maxWidth: 600 }}
+          onFinish={onSubmit}
+        >
+          <Form.Item<string>
+            label="Usuário"
+            name="username"
+            rules={[{ required: true, message: "Campo obrigatório!" }]}
+          >
+            <Input />
+          </Form.Item>
 
-          <div>
-            <FormLabel htmlFor="password">Senha</FormLabel>
-            <Input
-              id="password"
-              variant="password"
-              hasError={!!errors.password}
-              {...register("password", { required: true })}
-            />
-            {errors.password && (
-              <InputMessage>{errors.password.message}</InputMessage>
-            )}
-          </div>
+          <Form.Item<string>
+            label="Senha"
+            name="password"
+            rules={[{ required: true, message: "Campo obrigatório!" }]}
+          >
+            <Input.Password placeholder="senha" />
+          </Form.Item>
 
-          <Button>Acessar</Button>
-        </form>
+          <Button type="primary" htmlType="submit">
+            Entrar
+          </Button>
+        </Form>
       </div>
     </StyledSection>
   );
