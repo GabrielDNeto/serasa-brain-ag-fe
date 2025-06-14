@@ -12,7 +12,7 @@ interface StyledInputProps {
 
 export const StyledInput = styled.input<StyledInputProps>`
   width: 100%;
-  padding: 0.5rem;
+  padding: 0.5rem 0.75rem;
   border-radius: 0.5rem;
   font-size: 1rem;
   line-height: 1.5rem;
@@ -29,6 +29,12 @@ export const StyledInput = styled.input<StyledInputProps>`
   &:focus {
     border-color: ${({ theme, haserror }) =>
       haserror === "true" ? theme.colors.destructive : theme.colors.zinc[600]};
+  }
+
+  &:disabled {
+    background-color: #f9fafb;
+    cursor: not-allowed;
+    color: #9ca3af;
   }
 `;
 

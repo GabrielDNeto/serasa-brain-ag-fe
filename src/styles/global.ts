@@ -1,4 +1,4 @@
-import { createGlobalStyle } from "styled-components";
+import styled, { createGlobalStyle } from "styled-components";
 
 export const GlobalStyle = createGlobalStyle`
   * {
@@ -21,4 +21,11 @@ export const GlobalStyle = createGlobalStyle`
   ul, li {
     list-style: none;
   }
+`;
+
+export const FlexBetween = styled.div`
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 `;

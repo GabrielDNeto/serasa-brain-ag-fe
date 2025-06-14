@@ -3,13 +3,16 @@ import type { IButton } from ".";
 
 export const StyledButton = styled.button<IButton>`
   padding: 0.5rem 1rem;
-  font-size: 1rem;
-  line-height: 1.5rem;
-  border-radius: 8px;
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  border-radius: 0.5rem;
   border: none;
   font-weight: 600;
   cursor: pointer;
   transition: 0.2s;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
 
   background-color: ${({ theme, variant }) => {
     switch (variant) {
