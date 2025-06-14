@@ -2,7 +2,7 @@ export const theme = {
   colors: {
     primary: "#08AB7F",
     secondary: "#2ecc71",
-    destructive: "#ef4444",
+    destructive: "#ff4d4f",
 
     zinc: {
       50: "#FAFAFA",

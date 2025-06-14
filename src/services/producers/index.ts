@@ -7,3 +7,7 @@ export async function getProducersPaginated(params: Pagination) {
     params,
   });
 }
+
+export async function deleteProducer(id: number) {
+  return api.delete<void>(`/producers/${id}`);
+}

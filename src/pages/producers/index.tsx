@@ -4,14 +4,15 @@ import type { Column } from "@/@types/table";
 import Button from "@/components/atoms/Button";
 import Container from "@/components/organisms/Container";
 import { DataTable } from "@/components/organisms/Table";
-import { getProducersPaginated } from "@/services/producers";
-import { FlexBetween } from "@/styles/global";
-import { useQuery } from "@tanstack/react-query";
+import { deleteProducer, getProducersPaginated } from "@/services/producers";
+import { Flex, FlexBetween } from "@/styles/global";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { cnpj, cpf } from "cpf-cnpj-validator";
 import dayjs from "dayjs";
-import { Plus } from "lucide-react";
+import { Edit, Plus, Trash } from "lucide-react";
 import { useState } from "react";
 import { ContentWrapper, StyledSection, TableWrapper } from "./styles";
+import Tooltip from "@/components/atoms/Tooltip";
 
 export default function Producers() {
   const [pagination, setPagination] = useState<Pagination>({
@@ -19,9 +20,18 @@ export default function Producers() {
     pageSize: 10,
   });
 
+  const queryClient = useQueryClient();
+
   const { data: producersData } = useQuery({
     queryKey: ["producers"],
     queryFn: () => getProducersPaginated(pagination),
+  });
+
+  const deleteProducerMutation = useMutation({
+    mutationFn: deleteProducer,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["producers"] });
+    },
   });
 
   const columns: Column<Producer>[] = [
@@ -44,7 +54,25 @@ export default function Producers() {
     {
       header: "Ações",
       accessor: "id",
-      render: (val) => <span>{val.toString()}</span>,
+      render: (id) => (
+        <Flex gap="0.5rem">
+          <Tooltip content="Editar">
+            <Button variant="outline" size="sm">
+              <Edit size={18} />
+            </Button>
+          </Tooltip>
+
+          <Tooltip content="Exluir">
+            <Button
+              variant="destructive"
+              size="sm"
+              onClick={() => deleteProducerMutation.mutate(Number(id))}
+            >
+              <Trash size={18} />
+            </Button>
+          </Tooltip>
+        </Flex>
+      ),
     },
   ] as const;
 

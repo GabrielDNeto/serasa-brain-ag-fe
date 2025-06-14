@@ -29,3 +29,14 @@ export const FlexBetween = styled.div`
   align-items: center;
   justify-content: space-between;
 `;
+
+type FlexProps = {
+  gap: string;
+};
+
+export const Flex = styled.div<FlexProps>`
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: ${({ gap }) => gap};
+`;
