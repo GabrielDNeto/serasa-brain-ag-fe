@@ -29,6 +29,10 @@ export const GlobalStyle = createGlobalStyle`
     }
   }
 
+  :where(.css-dev-only-do-not-override-1ebbrk1).ant-select-dropdown .ant-select-item-option-selected:not(.ant-select-item-option-disabled) {
+    color: white
+  }
+
 `;
 
 export const FlexBetween = styled.div`

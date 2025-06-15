@@ -9,7 +9,7 @@ const navItems = [
   },
   {
     label: "Produtores",
-    href: APP_ROUTES.private.producers,
+    href: APP_ROUTES.private.producers.root,
   },
 ];
 

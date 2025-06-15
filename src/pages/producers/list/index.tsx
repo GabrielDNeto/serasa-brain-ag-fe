@@ -1,18 +1,24 @@
 import type { Pagination } from "@/@types/pagination";
 import type { Producer } from "@/@types/producer";
-import type { Column } from "@/@types/table";
-import Button from "@/components/atoms/Button";
 import Container from "@/components/organisms/Container";
-import { DataTable } from "@/components/organisms/Table";
 import { deleteProducer, getProducersPaginated } from "@/services/producers";
-import { Flex, FlexBetween } from "@/styles/global";
+import { FlexBetween } from "@/styles/global";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import {
+  Button,
+  Dropdown,
+  Flex,
+  Table,
+  type MenuProps,
+  type TableProps,
+} from "antd";
 import { cnpj, cpf } from "cpf-cnpj-validator";
 import dayjs from "dayjs";
-import { Edit, Plus, Trash } from "lucide-react";
+import { Edit, MoreHorizontal, Plus, Trash } from "lucide-react";
 import { useState } from "react";
 import { ContentWrapper, StyledSection, TableWrapper } from "./styles";
-import Tooltip from "@/components/atoms/Tooltip";
+import { Link, useNavigate } from "react-router";
+import { APP_ROUTES } from "@/config/routes/constants";
 
 export default function Producers() {
   const [pagination, setPagination] = useState<Pagination>({
@@ -22,8 +28,10 @@ export default function Producers() {
 
   const queryClient = useQueryClient();
 
+  const navigate = useNavigate();
+
   const { data: producersData } = useQuery({
-    queryKey: ["producers"],
+    queryKey: ["producers", pagination],
     queryFn: () => getProducersPaginated(pagination),
   });
 
@@ -34,47 +42,77 @@ export default function Producers() {
     },
   });
 
-  const columns: Column<Producer>[] = [
-    { header: "Name", accessor: "name" },
+  const columns: TableProps<Producer>["columns"] = [
     {
-      header: "CPF/CNPJ",
-      accessor: "document",
-      render: (val) =>
-        val.toString().length >= 14
-          ? cnpj.format(val.toString())
-          : cpf.format(val.toString()),
-    },
-    { header: "Cidade", accessor: "city" },
-    { header: "Estado(UF)", accessor: "state" },
-    {
-      header: "Última atualização",
-      accessor: "updatedAt",
-      render: (val) => dayjs(val.toString()).format("DD/MM/YYYY"),
+      title: "Name",
+      dataIndex: "name",
+      key: "name",
     },
     {
-      header: "Ações",
-      accessor: "id",
-      render: (id) => (
-        <Flex gap="0.5rem">
-          <Tooltip content="Editar">
-            <Button variant="outline" size="sm">
-              <Edit size={18} />
+      title: "CPF/CNPJ",
+      dataIndex: "document",
+      key: "document",
+      render: (doc: string) =>
+        doc.length >= 14 ? cnpj.format(doc) : cpf.format(doc),
+    },
+    {
+      title: "Cidade",
+      dataIndex: "city",
+      key: "city",
+    },
+    {
+      title: "Estado (UF)",
+      dataIndex: "state",
+      key: "state",
+    },
+    {
+      title: "Última atualização",
+      dataIndex: "updatedAt",
+      key: "updatedAt",
+      render: (updatedAt: string) => dayjs(updatedAt).format("DD/MM/YYYY"),
+    },
+    {
+      title: "Ações",
+      dataIndex: "id",
+      key: "id",
+      render: (id: number) => {
+        const items: MenuProps["items"] = [
+          {
+            key: "1",
+            label: (
+              <Link to={`${APP_ROUTES.private.producers.root}/${id}`}>
+                <Flex gap="0.5rem" align="center">
+                  <Edit size={16} />
+                  Editar
+                </Flex>
+              </Link>
+            ),
+          },
+          {
+            key: "2",
+            label: (
+              <Flex gap="0.5rem" align="center">
+                <Trash size={16} />
+                Excluir
+              </Flex>
+            ),
+            onClick: () => deleteProducerMutation.mutate(id),
+          },
+        ];
+        return (
+          <Dropdown
+            menu={{ items }}
+            placement="bottomRight"
+            trigger={["click"]}
+          >
+            <Button type="text" size="small">
+              <MoreHorizontal size={20} />
             </Button>
-          </Tooltip>
-
-          <Tooltip content="Exluir">
-            <Button
-              variant="destructive"
-              size="sm"
-              onClick={() => deleteProducerMutation.mutate(Number(id))}
-            >
-              <Trash size={18} />
-            </Button>
-          </Tooltip>
-        </Flex>
-      ),
+          </Dropdown>
+        );
+      },
     },
-  ] as const;
+  ];
 
   return (
     <StyledSection>
@@ -82,16 +120,28 @@ export default function Producers() {
         <ContentWrapper>
           <FlexBetween>
             <h1>Produtores</h1>
-            <Button>
+            <Button
+              type="primary"
+              onClick={() => navigate(APP_ROUTES.private.producers.create)}
+            >
               <Plus />
               Adicionar Produtor
             </Button>
           </FlexBetween>
 
           <TableWrapper>
-            <DataTable
+            <Table<Producer>
               columns={columns}
-              data={producersData?.data?.items || []}
+              dataSource={producersData?.data.items}
+              rowKey="id"
+              pagination={{
+                pageSize: pagination.pageSize,
+                current: pagination.pageNumber,
+                total: producersData?.data.meta.total,
+                onChange: (pageNumber, pageSize) => {
+                  setPagination({ pageNumber, pageSize });
+                },
+              }}
             />
           </TableWrapper>
         </ContentWrapper>

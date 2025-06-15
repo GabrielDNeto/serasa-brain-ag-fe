@@ -1,11 +1,11 @@
-import { createBrowserRouter } from "react-router";
-import Dashboard from "../../pages/dashboard";
-import PagesTemplate from "../../components/templates/PagesTemplate";
-import { APP_ROUTES } from "./constants";
+import RouteGuard from "@/components/providers/RouteGuard";
+import CreateOrEditProducerPage from "@/pages/producers/create-or-edit";
 import Producers from "@/pages/producers/list";
 import Signin from "@/pages/signin";
-import RouteGuard from "@/components/providers/RouteGuard";
-import CreateOrEditProducer from "@/pages/producers/create-or-edit";
+import { createBrowserRouter } from "react-router";
+import PagesTemplate from "../../components/templates/PagesTemplate";
+import Dashboard from "../../pages/dashboard";
+import { APP_ROUTES } from "./constants";
 
 export const ROUTER = createBrowserRouter([
   {
@@ -23,16 +23,16 @@ export const ROUTER = createBrowserRouter([
             Component: Dashboard,
           },
           {
-            path: APP_ROUTES.private.producers,
+            path: APP_ROUTES.private.producers.root,
             Component: Producers,
           },
           {
-            path: `${APP_ROUTES.private.producers}/create`,
-            Component: CreateOrEditProducer,
+            path: APP_ROUTES.private.producers.create,
+            Component: CreateOrEditProducerPage,
           },
           {
-            path: `${APP_ROUTES.private.producers}/:id`,
-            Component: CreateOrEditProducer,
+            path: APP_ROUTES.private.producers.edit,
+            Component: CreateOrEditProducerPage,
           },
         ],
       },

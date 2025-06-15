@@ -8,6 +8,10 @@ export async function getProducersPaginated(params: Pagination) {
   });
 }
 
+export async function getProducerById(id: number) {
+  return api.get<Producer>(`/producers/${id}`);
+}
+
 export async function deleteProducer(id: number) {
   return api.delete<void>(`/producers/${id}`);
 }
