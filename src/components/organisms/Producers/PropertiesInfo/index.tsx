@@ -15,7 +15,7 @@ export default function PropertiesInfo({ statesOptions }: PropertiesProps) {
             title={
               <Flex justify="space-between" align="center">
                 <h2>Propriedades</h2>
-                <Button type="primary" onClick={() => add()}>
+                <Button type="default" onClick={() => add()}>
                   <Plus size={18} />
                   Adicionar Propriedade
                 </Button>
