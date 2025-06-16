@@ -1,13 +1,13 @@
 import { Button, Flex, Form, Input } from "antd";
-import { MinusCircle, Plus } from "lucide-react";
+import { MinusCircle } from "lucide-react";
 
 export default function HarvestCrops({ harvest }: { harvest: number }) {
   return (
     <Form.List name={[harvest, "crops"]}>
-      {(fields, { add, remove }) => (
+      {(fields, { remove }) => (
         <>
           {fields.map(({ key, name, ...restField }) => (
-            <Flex gap="1rem" align="center">
+            <Flex gap="1rem" align="center" key={key}>
               <Button type="text" onClick={() => remove(name)}>
                 <MinusCircle size={18} />
               </Button>

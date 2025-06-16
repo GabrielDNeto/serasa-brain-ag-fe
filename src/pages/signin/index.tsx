@@ -1,12 +1,12 @@
 import { APP_ROUTES } from "@/config/routes/constants";
 import { useAuth } from "@/hooks/useAuth";
 import { signIn } from "@/services/auth";
+import { getErrorMessage } from "@/utils/get-error-message";
 import { useMutation } from "@tanstack/react-query";
 import { Button, Form, Input, message } from "antd";
-import { useNavigate, type ErrorResponse } from "react-router";
+import { Helmet } from "react-helmet";
+import { useNavigate } from "react-router";
 import { StyledSection } from "./styles";
-import type { AxiosError } from "axios";
-import { getErrorMessage } from "@/utils/get-error-message";
 
 type SigninSchemaType = {
   username: string;
@@ -39,40 +39,46 @@ export default function Signin() {
   };
 
   return (
-    <StyledSection>
-      {contextHolder}
+    <>
+      <Helmet>
+        <title>Brain Ag | Entrar</title>
+        <meta name="description" content="Acesse a plataforma" />
+      </Helmet>
+      <StyledSection>
+        {contextHolder}
 
-      <div>
-        <h1>Acessar Plataforma</h1>
+        <div>
+          <h1>Acessar Plataforma</h1>
 
-        <Form
-          name="basic"
-          labelCol={{ span: 24 }}
-          wrapperCol={{ span: 24 }}
-          style={{ maxWidth: 600 }}
-          onFinish={onSubmit}
-        >
-          <Form.Item<string>
-            label="Usuário"
-            name="username"
-            rules={[{ required: true, message: "Campo obrigatório!" }]}
+          <Form
+            name="basic"
+            labelCol={{ span: 24 }}
+            wrapperCol={{ span: 24 }}
+            style={{ maxWidth: 600 }}
+            onFinish={onSubmit}
           >
-            <Input />
-          </Form.Item>
+            <Form.Item<string>
+              label="Usuário"
+              name="username"
+              rules={[{ required: true, message: "Campo obrigatório!" }]}
+            >
+              <Input />
+            </Form.Item>
 
-          <Form.Item<string>
-            label="Senha"
-            name="password"
-            rules={[{ required: true, message: "Campo obrigatório!" }]}
-          >
-            <Input.Password placeholder="senha" />
-          </Form.Item>
+            <Form.Item<string>
+              label="Senha"
+              name="password"
+              rules={[{ required: true, message: "Campo obrigatório!" }]}
+            >
+              <Input.Password placeholder="senha" />
+            </Form.Item>
 
-          <Button type="primary" htmlType="submit">
-            Entrar
-          </Button>
-        </Form>
-      </div>
-    </StyledSection>
+            <Button type="primary" htmlType="submit">
+              Entrar
+            </Button>
+          </Form>
+        </div>
+      </StyledSection>
+    </>
   );
 }

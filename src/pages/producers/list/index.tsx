@@ -20,6 +20,7 @@ import { Edit, MoreHorizontal, Plus, Trash } from "lucide-react";
 import { useState } from "react";
 import { Link, useNavigate } from "react-router";
 import { ContentWrapper, TableWrapper } from "./styles";
+import { Helmet } from "react-helmet";
 
 export default function Producers() {
   const [pagination, setPagination] = useState<Pagination>({
@@ -118,48 +119,57 @@ export default function Producers() {
   ];
 
   return (
-    <StyledSection>
-      <Container>
-        <ContentWrapper>
-          <h1>Produtores</h1>
+    <>
+      <Helmet>
+        <title>Brain Ag | Produtores</title>
+        <meta
+          name="description"
+          content="Visualize todos os produtores cadastrados"
+        />
+      </Helmet>
+      <StyledSection>
+        <Container>
+          <ContentWrapper>
+            <h1>Produtores</h1>
 
-          <Flex justify="space-between" align="center">
-            <Input.Search
-              allowClear
-              onSearch={(val) => setSearch(val)}
-              placeholder="Busque por nome ou documento"
-              style={{ maxWidth: "18rem" }}
-            />
+            <Flex justify="space-between" align="center">
+              <Input.Search
+                allowClear
+                onSearch={(val) => setSearch(val)}
+                placeholder="Busque por nome ou documento"
+                style={{ maxWidth: "18rem" }}
+              />
 
-            <Button
-              type="primary"
-              onClick={() => navigate(APP_ROUTES.private.producers.create)}
-            >
-              <Plus />
-              Adicionar Produtor
-            </Button>
-          </Flex>
+              <Button
+                type="primary"
+                onClick={() => navigate(APP_ROUTES.private.producers.create)}
+              >
+                <Plus />
+                Adicionar Produtor
+              </Button>
+            </Flex>
 
-          <TableWrapper>
-            <Table<Producer>
-              columns={columns}
-              dataSource={producersData?.data.items}
-              rowKey="id"
-              scroll={{
-                y: 560,
-              }}
-              pagination={{
-                pageSize: pagination.pageSize,
-                current: pagination.pageNumber,
-                total: producersData?.data.meta.total,
-                onChange: (pageNumber, pageSize) => {
-                  setPagination({ pageNumber, pageSize });
-                },
-              }}
-            />
-          </TableWrapper>
-        </ContentWrapper>
-      </Container>
-    </StyledSection>
+            <TableWrapper>
+              <Table<Producer>
+                columns={columns}
+                dataSource={producersData?.data.items}
+                rowKey="id"
+                scroll={{
+                  y: 560,
+                }}
+                pagination={{
+                  pageSize: pagination.pageSize,
+                  current: pagination.pageNumber,
+                  total: producersData?.data.meta.total,
+                  onChange: (pageNumber, pageSize) => {
+                    setPagination({ pageNumber, pageSize });
+                  },
+                }}
+              />
+            </TableWrapper>
+          </ContentWrapper>
+        </Container>
+      </StyledSection>
+    </>
   );
 }
