@@ -6,6 +6,7 @@ import { createBrowserRouter } from "react-router";
 import PagesTemplate from "../../components/templates/PagesTemplate";
 import Dashboard from "../../pages/dashboard";
 import { APP_ROUTES } from "./constants";
+import { CreateOrEditProducerProvider } from "@/contexts/create-or-edit-producer";
 
 export const ROUTER = createBrowserRouter([
   {
@@ -28,11 +29,19 @@ export const ROUTER = createBrowserRouter([
           },
           {
             path: APP_ROUTES.private.producers.create,
-            Component: CreateOrEditProducerPage,
+            element: (
+              <CreateOrEditProducerProvider>
+                <CreateOrEditProducerPage />
+              </CreateOrEditProducerProvider>
+            ),
           },
           {
             path: APP_ROUTES.private.producers.edit,
-            Component: CreateOrEditProducerPage,
+            element: (
+              <CreateOrEditProducerProvider>
+                <CreateOrEditProducerPage />
+              </CreateOrEditProducerProvider>
+            ),
           },
         ],
       },

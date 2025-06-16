@@ -6,9 +6,9 @@ import { createContext, useState } from "react";
 type HarvestProps = Partial<Harvest>;
 
 type CreateProducerContextProps = {
-  form: FormInstance<Producer> | undefined;
+  form: FormInstance<Omit<Producer, "id">> | undefined;
   setForm: React.Dispatch<
-    React.SetStateAction<FormInstance<Producer> | undefined>
+    React.SetStateAction<FormInstance<Omit<Producer, "id">> | undefined>
   >;
   harvests: HarvestProps[];
   setHarvests: React.Dispatch<React.SetStateAction<HarvestProps[]>>;
@@ -23,9 +23,9 @@ export function CreateOrEditProducerProvider({
 }: {
   children: React.ReactNode;
 }) {
-  const [form, setForm] = useState<FormInstance<Producer> | undefined>(
-    undefined,
-  );
+  const [form, setForm] = useState<
+    FormInstance<Omit<Producer, "id">> | undefined
+  >(undefined);
 
   const [harvests, setHarvests] = useState<HarvestProps[]>([]);
 

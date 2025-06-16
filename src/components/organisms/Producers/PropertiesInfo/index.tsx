@@ -25,9 +25,9 @@ export default function PropertiesInfo({ statesOptions }: PropertiesProps) {
           >
             <Flex vertical gap="1.5rem">
               {fields?.map(({ key, name, ...restField }) => (
-                <>
+                <div key={key}>
                   {key >= 1 && <Divider />}
-                  <Flex gap="1.5rem" align="center" key={key}>
+                  <Flex gap="1.5rem" align="center">
                     <Flex vertical gap="1rem">
                       <div>
                         <Flex key={key} gap="1rem" align="center">
@@ -79,6 +79,7 @@ export default function PropertiesInfo({ statesOptions }: PropertiesProps) {
                             name={[name, "arableArea"]}
                             label="Área agricultável (ha)"
                             style={{ maxWidth: "11rem" }}
+                            normalize={(value) => value && Number(value)}
                             rules={[
                               { required: true, message: "Informe o tamanho" },
                             ]}
@@ -90,6 +91,7 @@ export default function PropertiesInfo({ statesOptions }: PropertiesProps) {
                             {...restField}
                             name={[name, "vegetationArea"]}
                             label="Área vegetação (ha)"
+                            normalize={(value) => value && Number(value)}
                             style={{ maxWidth: "10rem" }}
                             rules={[
                               { required: true, message: "Informe o tamanho" },
@@ -108,7 +110,7 @@ export default function PropertiesInfo({ statesOptions }: PropertiesProps) {
                       <Trash size={18} />
                     </Button>
                   </Flex>
-                </>
+                </div>
               ))}
             </Flex>
           </Card>

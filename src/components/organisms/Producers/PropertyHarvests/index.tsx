@@ -3,7 +3,7 @@ import type { Property } from "@/@types/property";
 import { useCreateOrEditProducer } from "@/hooks/useCreateOrEditProducer";
 import { Button, Divider, Flex, Form } from "antd";
 import { Plus } from "lucide-react";
-import { useCallback, useState } from "react";
+import { Fragment, useCallback, useState } from "react";
 import HarvestCropsModal from "../../Modals/HarvestCrops";
 import { serialize } from "@/utils/serializer";
 
@@ -84,9 +84,9 @@ export default function PropertyHarvests({ property }: { property: number }) {
       </Flex>
       <Flex gap="1rem" wrap style={{ marginTop: "1.5rem" }}>
         {harvests?.map((harvest, index) => (
-          <>
+          <Fragment key={index}>
             {!!serialize(harvest).crops.length && (
-              <Button key={index} onClick={() => handleEditHarvest(harvest)}>
+              <Button onClick={() => handleEditHarvest(harvest)}>
                 <Flex align="center" gap="0.5rem">
                   <b>{harvest.year}</b>
                   <Divider type="vertical" />
@@ -96,7 +96,7 @@ export default function PropertyHarvests({ property }: { property: number }) {
                 </Flex>
               </Button>
             )}
-          </>
+          </Fragment>
         ))}
       </Flex>
 
