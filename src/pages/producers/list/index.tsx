@@ -1,8 +1,8 @@
 import type { Pagination } from "@/@types/pagination";
 import type { Producer } from "@/@types/producer";
 import Container from "@/components/organisms/Container";
+import { APP_ROUTES } from "@/config/routes/constants";
 import { deleteProducer, getProducersPaginated } from "@/services/producers";
-import { FlexBetween } from "@/styles/global";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import {
   Button,
@@ -16,9 +16,9 @@ import { cnpj, cpf } from "cpf-cnpj-validator";
 import dayjs from "dayjs";
 import { Edit, MoreHorizontal, Plus, Trash } from "lucide-react";
 import { useState } from "react";
-import { ContentWrapper, StyledSection, TableWrapper } from "./styles";
 import { Link, useNavigate } from "react-router";
-import { APP_ROUTES } from "@/config/routes/constants";
+import { ContentWrapper, TableWrapper } from "./styles";
+import { StyledSection } from "@/styles/global";
 
 export default function Producers() {
   const [pagination, setPagination] = useState<Pagination>({
@@ -118,7 +118,7 @@ export default function Producers() {
     <StyledSection>
       <Container>
         <ContentWrapper>
-          <FlexBetween>
+          <Flex justify="space-between" align="center">
             <h1>Produtores</h1>
             <Button
               type="primary"
@@ -127,7 +127,7 @@ export default function Producers() {
               <Plus />
               Adicionar Produtor
             </Button>
-          </FlexBetween>
+          </Flex>
 
           <TableWrapper>
             <Table<Producer>

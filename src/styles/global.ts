@@ -35,20 +35,17 @@ export const GlobalStyle = createGlobalStyle`
 
 `;
 
-export const FlexBetween = styled.div`
+export const StyledSection = styled.section`
   width: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
+  height: 100%;
+  padding: 2rem 1rem;
 `;
 
-type FlexProps = {
-  gap: string;
-};
-
-export const Flex = styled.div<FlexProps>`
+export const ContentWrapper = styled.div`
+  height: 100%;
   width: 100%;
-  display: flex;
-  align-items: center;
-  gap: ${({ gap }) => gap};
+  background-color: white;
+  padding: 1.5rem;
+  border-radius: 1rem;
+  overflow-y: auto;
 `;
