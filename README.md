@@ -1,54 +1,63 @@
-# React + TypeScript + Vite
+# Brain AG - Gestão de Produtores Rurais
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Este é um aplicativo web desenvolvido em React + TypeScript para gestão de produtores rurais, propriedades, safras e culturas. O projeto utiliza Vite, Ant Design, Styled Components e React Query para uma experiência moderna e eficiente.
 
-Currently, two official plugins are available:
+## Funcionalidades
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- Autenticação de usuários
+- Cadastro, edição e exclusão de produtores rurais
+- Gerenciamento de propriedades, áreas agricultáveis e vegetação
+- Controle de safras e culturas por propriedade
+- Dashboard com gráficos de propriedades, culturas e uso do solo
+- Busca e paginação de produtores
+- Interface responsiva e amigável
 
-## Expanding the ESLint configuration
+## Tecnologias Utilizadas
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+- [React](https://react.dev/)
+- [TypeScript](https://www.typescriptlang.org/)
+- [Vite](https://vitejs.dev/)
+- [Ant Design](https://ant.design/)
+- [Styled Components](https://styled-components.com/)
+- [React Query](https://tanstack.com/query/latest)
+- [Axios](https://axios-http.com/)
+- [Chart.js](https://www.chartjs.org/)
+- [Lucide React Icons](https://lucide.dev/)
 
-```js
-export default tseslint.config({
-  extends: [
-    // Remove ...tseslint.configs.recommended and replace with this
-    ...tseslint.configs.recommendedTypeChecked,
-    // Alternatively, use this for stricter rules
-    ...tseslint.configs.strictTypeChecked,
-    // Optionally, add this for stylistic rules
-    ...tseslint.configs.stylisticTypeChecked,
-  ],
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ["./tsconfig.node.json", "./tsconfig.app.json"],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-});
+## Estrutura do Projeto
+
+```sh
+src/
+  components/ # Componentes reutilizáveis (atoms, molecules, organisms)
+  pages/ # Páginas principais do app
+  services/ # Serviços de API
+  hooks/ # Hooks customizados
+  contexts/ # Contextos de estado global
+  styles/ # Temas e estilos globais
+  utils/ # Funções utilitárias
+  @types/ # Tipagens TypeScript
+
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## Como rodar o projeto
 
-```js
-// eslint.config.js
-import reactX from "eslint-plugin-react-x";
-import reactDom from "eslint-plugin-react-dom";
+1. **Clone o repositório:**
 
-export default tseslint.config({
-  plugins: {
-    // Add the react-x and react-dom plugins
-    "react-x": reactX,
-    "react-dom": reactDom,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended typescript rules
-    ...reactX.configs["recommended-typescript"].rules,
-    ...reactDom.configs.recommended.rules,
-  },
-});
-```
+   ```sh
+   git clone <url-do-repo>
+   cd frontend
+   ```
+
+2. **Instale as dependências:**
+   ```sh
+   npm i
+   # ou
+   npm install
+   ```
+3. **Iniciando app:**
+   ```sh
+   npm run dev
+   ```
+4. **Acesso**
+
+- http://localhost:5173/dashboard
