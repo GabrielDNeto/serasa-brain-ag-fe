@@ -2,7 +2,7 @@ import RouteGuard from "@/components/providers/RouteGuard";
 import CreateOrEditProducerPage from "@/pages/producers/create-or-edit";
 import Producers from "@/pages/producers/list";
 import Signin from "@/pages/signin";
-import { createBrowserRouter } from "react-router";
+import { createBrowserRouter, Navigate } from "react-router";
 import PagesTemplate from "../../components/templates/PagesTemplate";
 import Dashboard from "../../pages/dashboard";
 import { APP_ROUTES } from "./constants";
@@ -46,5 +46,9 @@ export const ROUTER = createBrowserRouter([
         ],
       },
     ],
+  },
+  {
+    path: "*",
+    element: <Navigate to={APP_ROUTES.private.dashboard} replace />,
   },
 ]);
