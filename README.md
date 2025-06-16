@@ -61,3 +61,13 @@ src/
 4. **Acesso**
 
 - http://localhost:5173/dashboard
+
+- Usuário:
+
+  ```sh
+  #user
+  admin
+
+  #pass
+  admin@123
+  ```
