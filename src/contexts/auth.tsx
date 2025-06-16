@@ -4,6 +4,7 @@ import React, { createContext, useEffect, useState } from "react";
 interface IAuthContext {
   authStatus: AuthStatusEnum;
   handleAuthenticate: (token: string) => void;
+  handleLogout: () => void;
 }
 
 interface IAuthProvider {
@@ -22,6 +23,11 @@ export function AuthProvider({ children }: IAuthProvider) {
     setAuthStatus(AuthStatusEnum.AUTHORIZED);
   };
 
+  const handleLogout = () => {
+    setAuthStatus(AuthStatusEnum.UNNAUTHORIZED);
+    localStorage.removeItem("@session:token");
+  };
+
   useEffect(() => {
     const token = localStorage.getItem("@session:token");
 
@@ -33,7 +39,9 @@ export function AuthProvider({ children }: IAuthProvider) {
   }, []);
 
   return (
-    <AuthContext.Provider value={{ authStatus, handleAuthenticate }}>
+    <AuthContext.Provider
+      value={{ authStatus, handleAuthenticate, handleLogout }}
+    >
       {children}
     </AuthContext.Provider>
   );
