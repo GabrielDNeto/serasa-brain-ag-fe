@@ -54,13 +54,19 @@ src/
    # ou
    npm install
    ```
-3. **Iniciando app:**
+3. **Buildando app:**
    ```sh
-   npm run dev
+   npm run build
    ```
-4. **Acesso**
+4. **Iniciando app:**
 
-- http://localhost:5173/dashboard
+```sh
+   npm run preview
+```
+
+5. **Acesso:**
+
+- http://localhost:4173/
 
 - Usuário:
 
