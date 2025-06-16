@@ -2,9 +2,15 @@ import type { Paginated, Pagination } from "@/@types/pagination";
 import type { Producer } from "@/@types/producer";
 import { api } from "@/config/api";
 
-export async function getProducersPaginated(params: Pagination) {
+export async function getProducersPaginated(
+  params: Pagination,
+  search?: string,
+) {
   return api.get<Paginated<Producer>>("/producers", {
-    params,
+    params: {
+      ...params,
+      search: search || undefined,
+    },
   });
 }
 

@@ -77,7 +77,7 @@ export default function Dashboard() {
               </Card>
 
               <Card>
-                <Flex align="start" justify="space-around">
+                <Flex align="start" justify="space-around" wrap>
                   <Flex vertical gap="1.5rem" align="center" justify="center">
                     <h3 className="text-lg font-medium mb-2">
                       Propriedades por estado

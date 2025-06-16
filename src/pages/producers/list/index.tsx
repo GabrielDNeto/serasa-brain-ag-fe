@@ -3,11 +3,13 @@ import type { Producer } from "@/@types/producer";
 import Container from "@/components/organisms/Container";
 import { APP_ROUTES } from "@/config/routes/constants";
 import { deleteProducer, getProducersPaginated } from "@/services/producers";
+import { StyledSection } from "@/styles/global";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import {
   Button,
   Dropdown,
   Flex,
+  Input,
   Table,
   type MenuProps,
   type TableProps,
@@ -18,7 +20,6 @@ import { Edit, MoreHorizontal, Plus, Trash } from "lucide-react";
 import { useState } from "react";
 import { Link, useNavigate } from "react-router";
 import { ContentWrapper, TableWrapper } from "./styles";
-import { StyledSection } from "@/styles/global";
 
 export default function Producers() {
   const [pagination, setPagination] = useState<Pagination>({
@@ -26,13 +27,15 @@ export default function Producers() {
     pageSize: 10,
   });
 
+  const [search, setSearch] = useState("");
+
   const queryClient = useQueryClient();
 
   const navigate = useNavigate();
 
   const { data: producersData } = useQuery({
-    queryKey: ["producers", pagination],
-    queryFn: () => getProducersPaginated(pagination),
+    queryKey: ["producers", pagination, search],
+    queryFn: () => getProducersPaginated(pagination, search),
   });
 
   const deleteProducerMutation = useMutation({
@@ -118,8 +121,16 @@ export default function Producers() {
     <StyledSection>
       <Container>
         <ContentWrapper>
+          <h1>Produtores</h1>
+
           <Flex justify="space-between" align="center">
-            <h1>Produtores</h1>
+            <Input.Search
+              allowClear
+              onSearch={(val) => setSearch(val)}
+              placeholder="Busque por nome ou documento"
+              style={{ maxWidth: "18rem" }}
+            />
+
             <Button
               type="primary"
               onClick={() => navigate(APP_ROUTES.private.producers.create)}
@@ -134,6 +145,9 @@ export default function Producers() {
               columns={columns}
               dataSource={producersData?.data.items}
               rowKey="id"
+              scroll={{
+                y: 560,
+              }}
               pagination={{
                 pageSize: pagination.pageSize,
                 current: pagination.pageNumber,
